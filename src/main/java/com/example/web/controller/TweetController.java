@@ -10,6 +10,8 @@ public class TweetController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index(ModelAndView mav) {
+    	String hello = "Hello, Spring Boot!";
+    	mav.addObject("hello", hello);
         mav.setViewName("tweet/index");
         return mav;
     }
