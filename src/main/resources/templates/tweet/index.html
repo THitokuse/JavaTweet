@@ -5,6 +5,8 @@
 <title>Index Page</title>
 </head>
 <body>
-    <p th:text="${hello}"></p>
+	<div th:object="${tweet}">
+    	<p th:text="*{text}"></p>
+	</div>
 </body>
 </html>
