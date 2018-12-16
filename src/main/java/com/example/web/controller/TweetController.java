@@ -3,6 +3,9 @@ package com.example.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,8 +21,8 @@ public class TweetController {
 	private TweetRepository tweetRepository;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView index(ModelAndView mav) {
-    	List<Tweet> tweets = tweetRepository.findAll();
+    public ModelAndView index(@PageableDefault(size = 5) Pageable pageable, ModelAndView mav) {
+    	Page<Tweet> tweets = tweetRepository.findAllByOrderByIdDesc(pageable);
     	mav.addObject("tweets", tweets);
         mav.setViewName("tweet/index");
         return mav;
