@@ -5,8 +5,8 @@
 <title>Index Page</title>
 </head>
 <body>
-	<div th:object="${tweet}">
-    	<p th:text="*{text}"></p>
+	<div th:each="tweet : ${tweets}">
+    	<p th:text="*{tweet.text}"></p>
 	</div>
 </body>
 </html>
