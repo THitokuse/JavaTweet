@@ -24,5 +24,18 @@ public class TweetController {
         mav.setViewName("tweet/index");
         return mav;
     }
+    
+    @RequestMapping(value = "/tweet/new", method = RequestMethod.GET)
+    public ModelAndView newTweet(ModelAndView mav) {
+    	mav.setViewName("tweet/new");
+    	return mav;
+    }
+    
+    @RequestMapping(value = "/tweet/new", method = RequestMethod.POST)
+    public ModelAndView createTweet(Tweet newTweet, ModelAndView mav) {
+    	tweetRepository.saveAndFlush(newTweet);
+    	mav.setViewName("tweet/create");
+    	return mav;
+    }
 
 }
