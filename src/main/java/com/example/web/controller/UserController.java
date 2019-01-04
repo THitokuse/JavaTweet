@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.business.domain.User;
 import com.example.business.repository.UserRepository;
@@ -15,6 +18,11 @@ public class UserController {
 
   @Autowired
     private UserRepository userRepository;
+  
+  @ModelAttribute(name = "login_user")
+  public UserDetails setLoginUser(@AuthenticationPrincipal UserDetails userDetails) {
+      return userDetails;
+  }
   
   @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
 	public ModelAndView registration(ModelAndView mav) {

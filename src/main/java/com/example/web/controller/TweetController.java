@@ -7,23 +7,30 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.business.domain.Tweet;
 import com.example.business.repository.TweetRepository;
+
 
 @Controller
 public class TweetController {
 	
 	@Autowired
 	private TweetRepository tweetRepository;
+	
+	@ModelAttribute(name = "login_user")
+	public UserDetails setLoginUser(@AuthenticationPrincipal UserDetails userDetails) {
+	    return userDetails;
+	}
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index(@PageableDefault(size = 5) Pageable pageable, ModelAndView mav, @AuthenticationPrincipal UserDetails userDetails) {
     	Page<Tweet> tweets = tweetRepository.findAllByOrderByIdDesc(pageable);
     	mav.addObject("tweets", tweets);
-    	mav.addObject("login_user", userDetails);
         mav.setViewName("tweet/index");
         return mav;
     }
