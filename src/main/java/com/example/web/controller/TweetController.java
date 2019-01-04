@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import com.example.business.domain.Tweet;
 import com.example.business.repository.TweetRepository;
@@ -19,9 +20,10 @@ public class TweetController {
 	private TweetRepository tweetRepository;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView index(@PageableDefault(size = 5) Pageable pageable, ModelAndView mav) {
+    public ModelAndView index(@PageableDefault(size = 5) Pageable pageable, ModelAndView mav, @AuthenticationPrincipal UserDetails userDetails) {
     	Page<Tweet> tweets = tweetRepository.findAllByOrderByIdDesc(pageable);
     	mav.addObject("tweets", tweets);
+    	mav.addObject("login_user", userDetails);
         mav.setViewName("tweet/index");
         return mav;
     }
