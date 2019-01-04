@@ -15,16 +15,16 @@ import com.example.business.domain.User;
 import com.example.business.repository.UserRepository;
 
 @Service
-public class UserDetailsServicelmpl implements UserDetailsService {
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Override
-	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
-		Set<GrantedAuthority> grantedAutorities = new HashSet<>();
-		
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAutorities);
-	}
+public class UserDetailsServiceImpl implements UserDetailsService {
+  @Autowired
+  private UserRepository userRepository;
+
+  @Override
+  @Transactional(readOnly = true)
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userRepository.findByUsername(username);
+    Set<GrantedAuthority> grantedAutorities = new HashSet<>();
+
+    return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAutorities);
+  }
 }
