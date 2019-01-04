@@ -9,7 +9,7 @@ import com.example.business.domain.User;
 
 @Controller
 public class UserController {
-	@RequestMapping(value = "/user/regisration", method = RequestMethod.GET)
+  @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
 	public ModelAndView registration(ModelAndView mav) {
 		mav.addObject("user", new User());
 		mav.setViewName("/user/registration");
