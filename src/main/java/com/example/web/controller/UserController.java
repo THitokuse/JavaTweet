@@ -15,16 +15,15 @@ public class UserController {
 
   @Autowired
     private UserRepository userRepository;
-  @Autowired
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+  
   @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
 	public ModelAndView registration(ModelAndView mav) {
 		mav.addObject("user", new User());
 		mav.setViewName("/user/registration");
 		return mav;
 	}
-  
+  @Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
   @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
     public ModelAndView registration(User user, ModelAndView mav) {
       if (!user.getPassword().equals(user.getPasswordConfirmation())) {
@@ -35,5 +34,11 @@ public class UserController {
 	  userRepository.saveAndFlush(user);
 	  mav.setViewName("redirect:/user/login");
 	  return mav;
+  }
+  @RequestMapping(value = "/user/login", method = RequestMethod.GET)
+  public ModelAndView login(ModelAndView mav) {
+      mav.addObject("user", new User());
+      mav.setViewName("/user/login");
+      return mav;
   }
 }
