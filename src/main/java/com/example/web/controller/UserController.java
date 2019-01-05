@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.business.domain.User;
 import com.example.business.repository.UserRepository;
+import com.example.util.UserCustom;
 
 @Controller
 public class UserController {
@@ -20,8 +21,8 @@ public class UserController {
     private UserRepository userRepository;
   
   @ModelAttribute(name = "login_user")
-  public UserDetails setLoginUser(@AuthenticationPrincipal UserDetails userDetails) {
-      return userDetails;
+  public UserDetails setLoginUser(@AuthenticationPrincipal UserCustom userCustom) {
+      return userCustom;
   }
   
   @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
