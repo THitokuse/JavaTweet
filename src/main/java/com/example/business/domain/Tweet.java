@@ -1,5 +1,6 @@
 package com.example.business.domain;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,9 @@ public class Tweet {
 	private String image;
 	
 	private String text;
+	
+	@ManyToOne
+	private User user;
 	
 	public Long getId() {
 		return id;
@@ -43,5 +47,11 @@ public class Tweet {
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
