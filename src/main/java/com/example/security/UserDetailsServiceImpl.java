@@ -13,18 +13,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.business.domain.User;
 import com.example.business.repository.UserRepository;
+import com.example.util.UserCustom;
 
 @Service
+//UserDetailsService-認証するユーザーを特定
 public class UserDetailsServiceImpl implements UserDetailsService {
-  @Autowired
-  private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-  @Override
-  @Transactional(readOnly = true)
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-	  User user = userRepository.findByEmail(email);
-    Set<GrantedAuthority> grantedAutorities = new HashSet<>();
+    @Override
+    @Transactional(readOnly = true)
+    //loadUserByUsername-Userのエンティティを取得し、SpringSequrityの中で使えるUserに変換
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        //grantedAuthorities-Userに管理者権限を持たせる際に使用する
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-    return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAutorities);
-  }
+        return new UserCustom(user.getId(), user.getUsername(), user.getPassword(), grantedAuthorities);
+    }
 }
