@@ -1,5 +1,6 @@
 package com.example.web.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -71,5 +72,13 @@ public class TweetController {
     	mav.addObject("tweet", tweet);
     	mav.setViewName("tweet/edit");
     	return mav;
+    }
+    @RequestMapping(value = "/tweet/{id}/edit", method = RequestMethod.POST)
+    public ModelAndView updateTweet(@ModelAttribute Tweet editTweet, @PathVariable("id") Long id, @AuthenticationPrincipal UserCustom userCustom, ModelAndView mav) {        
+        Tweet tweet = tweetRepository.findOne(id);
+        BeanUtils.copyProperties(editTweet, tweet);
+        tweetRepository.save(tweet);
+        mav.setViewName("tweet/update");
+        return mav;
     }
 }
