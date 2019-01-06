@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "tweets")
@@ -22,6 +23,7 @@ public class Tweet {
 	private String text;
 	
 	@ManyToOne
+	@JoinColumn(updatable = false)
 	private User user;
 	
 	public Long getId() {
