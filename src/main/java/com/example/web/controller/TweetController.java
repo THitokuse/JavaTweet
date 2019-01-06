@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.business.domain.Tweet;
 import com.example.business.repository.TweetRepository;
@@ -62,6 +63,13 @@ public class TweetController {
     	tweet.setUser(user);
     	tweetRepository.saveAndFlush(tweet);
     	mav.setViewName("tweet/create"); 
+    	return mav;
+    }
+    @RequestMapping(value = "/tweet/{id}/edit", method = RequestMethod.GET)
+    public ModelAndView editTweet(@PathVariable("id") Long id, ModelAndView mav) {
+    	Tweet tweet = tweetRepository.findOne(id);
+    	mav.addObject("tweet", tweet);
+    	mav.setViewName("tweet/edit");
     	return mav;
     }
 }
