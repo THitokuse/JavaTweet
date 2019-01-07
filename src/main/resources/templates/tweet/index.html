@@ -31,6 +31,7 @@
         	<div class="more">
         		<span>◼︎</span>
         		<ul class="more_list">
+        		<th:block th:if="${login_user != null} ? ${tweet.user.id.equals(login_user.id)}">
         			<li>
         				<a th:href="@{'/tweet/' + ${tweet.id} + '/edit'}">編集</a>
         			</li>
@@ -39,6 +40,7 @@
         					<input type="submit" value="削除" />
         				</form>
         			</li>
+        		</th:block>
         		</ul>
         	</div>
             <p th:text="${tweet.text}"></p>
