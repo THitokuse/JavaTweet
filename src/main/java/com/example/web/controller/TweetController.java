@@ -76,6 +76,10 @@ public class TweetController {
     @RequestMapping(value = "/tweet/{id}/edit", method = RequestMethod.POST)
     public ModelAndView updateTweet(@ModelAttribute Tweet editTweet, @PathVariable("id") Long id, @AuthenticationPrincipal UserCustom userCustom, ModelAndView mav) {        
         Tweet tweet = tweetRepository.findOne(id);
+        if (!tweet.getUser().getId().equals(userCustom.getId())) {
+        	mav.setViewName("redirect:/tweet/" + id + "/edit");
+        	return mav;
+        }
         BeanUtils.copyProperties(editTweet, tweet);
         tweetRepository.save(tweet);
         mav.setViewName("tweet/update");
