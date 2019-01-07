@@ -85,4 +85,15 @@ public class TweetController {
         mav.setViewName("tweet/update");
         return mav;
     }
+    @RequestMapping(value = "/tweet/{id}/delete", method = RequestMethod.POST)
+    public ModelAndView deleteTweet(@PathVariable("id") Long id, @AuthenticationPrincipal UserCustom userCustom, ModelAndView mav) {
+    	Tweet tweet = tweetRepository.findOne(id);
+    	if (!tweet.getUser().getId().equals(userCustom.getId())) {
+    		mav.setViewName("redirect:/");
+    		return mav;
+    	}
+    	tweetRepository.delete(tweet);
+    	mav.setViewName("redirect:/");
+    	return mav;
+    }
 }
